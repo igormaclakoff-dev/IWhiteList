@@ -1,0 +1,28 @@
+# ==========================================================
+#  IWhiteList  |  AuraCode
+#  Advanced whitelist management: GUI, temporary entries, notifications.
+# ==========================================================
+
+whitelist:
+  # Master switch. When disabled, everyone can join regardless of the list.
+  # Starts disabled so an empty list does not lock out your server: fill it first,
+  # then run /iwl on (or set this to true).
+  enabled: false
+  # Message shown to a player who is not whitelisted (MiniMessage).
+  # Placeholder: <player>. A multi-line value is allowed.
+  kick-message: |-
+    <gradient:#7B2FF7:#00D4FF><bold>IWhiteList</bold></gradient>
+    <red>Тебя нет в белом списке.
+    <gray>Попроси администрацию добавить тебя.
+  # Kick an online player as soon as their temporary entry expires.
+  kick-on-expiry: true
+
+settings:
+  # Turn off the vanilla server whitelist on startup so IWhiteList fully controls access.
+  disable-vanilla-whitelist: true
+  # Notify online staff (permission: iwhitelist.notify) about denied logins and expiry.
+  notify-admins: true
+  # Append every change (add/remove/toggle) to plugins/IWhiteList/actions.log.
+  log-actions: true
+  # How often (seconds) expired temporary entries are checked and removed.
+  expiry-check-seconds: 30

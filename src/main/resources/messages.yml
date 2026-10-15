@@ -1,0 +1,114 @@
+# ==========================================================
+#  IWhiteList  |  messages.yml
+#  Full MiniMessage support (https://docs.advntr.dev/minimessage/format.html)
+#  Available placeholders are documented per group.
+# ==========================================================
+
+prefix: "<gradient:#7B2FF7:#00D4FF><bold>IWhiteList</bold></gradient> <dark_gray>»</dark_gray> "
+
+# Plain-text units for durations and the permanent marker.
+duration:
+  days: "д"
+  hours: "ч"
+  minutes: "м"
+  seconds: "с"
+  permanent: "навсегда"
+
+command:
+  player-only: "<prefix><red>Команда доступна только игрокам."
+  no-permission: "<prefix><red>Недостаточно прав."
+  unknown-subcommand: "<prefix><red>Неизвестная подкоманда: <white><arg>"
+  usage: "<prefix><gray>Используй <white>/iwl help</white> <gray>для списка команд."
+  help:
+    - "<gradient:#7B2FF7:#00D4FF><bold>✦ IWhiteList</bold></gradient> <dark_gray>» <gray>помощь по командам"
+    - ""
+    - "<gradient:#00FF87:#00D4FF><bold>▸ Управление"
+    - "<dark_gray>▏ <white>/iwl menu <dark_gray>- <gray>открыть меню белого списка"
+    - "<dark_gray>▏ <white>/iwl list [стр.] <dark_gray>- <gray>список игроков в чате"
+    - "<dark_gray>▏ <white>/iwl add <ник> [срок] <dark_gray>- <gray>добавить игрока"
+    - "<dark_gray>▏ <white>/iwl remove <ник> <dark_gray>- <gray>убрать игрока"
+    - "<dark_gray>▏ <white>/iwl info <ник> <dark_gray>- <gray>информация о записи"
+    - ""
+    - "<gradient:#FFD700:#FF8A00><bold>▸ Управление списком"
+    - "<dark_gray>▏ <white>/iwl on <dark_gray>|<dark_gray> <white>off <dark_gray>- <gray>включить/выключить вайтлист"
+    - "<dark_gray>▏ <white>/iwl reload <dark_gray>- <gray>перезагрузить конфигурацию"
+    - ""
+    - "<dark_gray>▏ <gray>Срок: <white>30m</white>, <white>12h</white>, <white>7d</white> или <white>permanent"
+  reloaded: "<prefix><green>Конфигурация перезагружена."
+  added: "<prefix><green>Игрок <white><player></white> добавлен в белый список <dark_gray>(<white><duration></white>)</dark_gray>."
+  already: "<prefix><red>Игрок <white><player></white> уже в белом списке."
+  removed: "<prefix><green>Игрок <white><player></white> удалён из белого списка."
+  not-in-list: "<prefix><red>Игрок <white><player></white> не найден в белом списке."
+  unknown-player: "<prefix><red>Не удалось определить игрока <white><player></white>."
+  bad-duration: "<prefix><red>Неверный формат срока. Примеры: <white>30m</white>, <white>12h</white>, <white>7d</white>, <white>permanent"
+  enabled: "<prefix><green>Белый список <white>включён</white>."
+  disabled: "<prefix><red>Белый список <white>выключен</white>. Вход разрешён всем."
+  list-header: "<gradient:#7B2FF7:#00D4FF><bold>Белый список</bold></gradient> <dark_gray>» <gray>страница <white><page></white>/<white><total></white> <dark_gray>(<white><count></white> всего)"
+  list-entry: "<dark_gray> <white><index>.</white> <white><player> <dark_gray>— <gray><duration>"
+  list-empty: "<prefix><red>Белый список пуст."
+
+info:
+  header: "<gradient:#7B2FF7:#00D4FF><bold>Профиль</bold></gradient> <dark_gray>» <white><player>"
+  added-by: "<dark_gray> ▏ <gray>Добавил: <white><actor>"
+  added-at: "<dark_gray> ▏ <gray>Добавлен: <white><date>"
+  expires: "<dark_gray> ▏ <gray>Истекает: <white><duration>"
+
+menu:
+  title: "<dark_gray>IWhiteList <dark_gray>| <gray>стр. <page>"
+  add:
+    name: "<gradient:#00FF87:#00D4FF><bold>Добавить игрока</bold></gradient>"
+    lore:
+      - "<dark_gray> ▏ <gray>Введи ник игрока в чат."
+      - "<dark_gray> ▏ <gray>Можно указать срок: <white>ник 7d"
+      - ""
+      - "<dark_gray> ▏ <yellow>Нажми, чтобы добавить!"
+  entry:
+    name: "<white><player>"
+    lore:
+      - "<dark_gray> ▏ <gray>Добавил: <white><actor>"
+      - "<dark_gray> ▏ <gray>Срок: <white><duration>"
+      - ""
+      - "<dark_gray> ▏ <yellow>Нажми, чтобы удалить."
+  toggle-on:
+    name: "<gradient:#00FF87:#00D4FF><bold>Вайтлист: включён</bold></gradient>"
+    lore:
+      - "<dark_gray> ▏ <gray>Новые игроки должны быть в списке."
+      - ""
+      - "<dark_gray> ▏ <yellow>Нажми, чтобы выключить."
+  toggle-off:
+    name: "<gradient:#FF2D55:#FF8A00><bold>Вайтлист: выключен</bold></gradient>"
+    lore:
+      - "<dark_gray> ▏ <gray>Вход разрешён всем игрокам."
+      - ""
+      - "<dark_gray> ▏ <yellow>Нажми, чтобы включить."
+  info:
+    name: "<gradient:#7B2FF7:#00D4FF><bold>Статистика</bold></gradient>"
+    lore:
+      - "<dark_gray> ▏ <gray>Игроков в списке: <white><count>"
+      - "<dark_gray> ▏ <gray>Страница: <white><page>"
+  previous: "<gray>◀ Предыдущая"
+  next: "<gray>Следующая ▶"
+  close: "<red><bold>Закрыть"
+  empty: "<red>Список пуст."
+  add-prompt: "<prefix><gray>Введи ник игрока в чат (можно <white>ник 7d</white>) или напиши <white>отмена</white>."
+  add-cancelled: "<prefix><gray>Добавление отменено."
+
+confirm:
+  title: "<dark_gray>IWhiteList <dark_gray>| <gray>удаление"
+  name: "<white>Удалить <player>?"
+  lore:
+    - "<dark_gray> ▏ <gray>Срок: <white><duration>"
+    - ""
+    - "<dark_gray> ▏ <yellow>Подтверди удаление игрока."
+  yes: "<gradient:#00FF87:#00D4FF><bold>Да, удалить</bold></gradient>"
+  no: "<gradient:#FF2D55:#FF8A00><bold>Отмена</bold></gradient>"
+
+notify:
+  denied: "<prefix><red><player> <gray>не в белом списке и не может войти."
+  expired: "<prefix><gold><player> <gray>больше не в белом списке (срок истёк)."
+
+placeholder:
+  enabled: "включён"
+  disabled: "выключен"
+  yes: "в списке"
+  no: "не в списке"

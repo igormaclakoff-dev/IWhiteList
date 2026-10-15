@@ -1,0 +1,42 @@
+name: IWhiteList
+version: '${project.version}'
+main: com.auracode.iwhitelist.IWhiteListPlugin
+api-version: '1.21'
+authors: [AuraCode]
+description: Advanced whitelist management with a GUI, temporary entries and notifications.
+website: https://auracode.dev
+softdepend: [PlaceholderAPI]
+
+commands:
+  iwl:
+    description: IWhiteList main command.
+    usage: /iwl help
+    aliases: [iwhitelist]
+
+permissions:
+  iwhitelist.bypass:
+    description: Join the server even when not whitelisted.
+    default: op
+  iwhitelist.notify:
+    description: Receive whitelist notifications (denied logins and expiry).
+    default: op
+  iwhitelist.admin:
+    description: Access to all /iwl administrative subcommands.
+    default: op
+    children:
+      iwhitelist.command.help: true
+      iwhitelist.command.menu: true
+      iwhitelist.command.list: true
+      iwhitelist.command.add: true
+      iwhitelist.command.remove: true
+      iwhitelist.command.info: true
+      iwhitelist.command.toggle: true
+      iwhitelist.command.reload: true
+  iwhitelist.command.help: { default: op }
+  iwhitelist.command.menu: { default: op }
+  iwhitelist.command.list: { default: op }
+  iwhitelist.command.add: { default: op }
+  iwhitelist.command.remove: { default: op }
+  iwhitelist.command.info: { default: op }
+  iwhitelist.command.toggle: { default: op }
+  iwhitelist.command.reload: { default: op }
