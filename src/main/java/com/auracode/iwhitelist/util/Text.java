@@ -3,6 +3,7 @@ package com.auracode.iwhitelist.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
@@ -54,5 +55,13 @@ public final class Text {
 
     public static Component parseItem(String input) {
         return parseItem(input, Map.of());
+    }
+
+    /**
+     * Serializes a component to a legacy section string, required by APIs such as
+     * {@code InventoryView#setTitle(String)} that do not accept components directly.
+     */
+    public static String legacy(Component component) {
+        return LegacyComponentSerializer.legacySection().serialize(component);
     }
 }

@@ -77,8 +77,8 @@ public final class WhitelistMenu implements PluginMenu {
         entries = new ArrayList<>(plugin.getWhitelistManager().sortedEntries());
         int clamped = clampPage(page);
         if (clamped != page) {
-            plugin.getMenuService().openList(viewer, clamped);
-            return;
+            page = clamped;
+            viewer.getOpenInventory().setTitle(Text.legacy(title()));
         }
         render();
     }

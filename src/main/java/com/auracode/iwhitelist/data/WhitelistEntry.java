@@ -23,7 +23,7 @@ public final class WhitelistEntry {
         this.name = name;
         this.addedAt = addedAt;
         this.addedBy = addedBy;
-        this.addedByName = addedByName;
+        this.addedByName = addedByName == null || addedByName.isBlank() ? "CONSOLE" : addedByName;
         this.expiresAt = expiresAt;
     }
 

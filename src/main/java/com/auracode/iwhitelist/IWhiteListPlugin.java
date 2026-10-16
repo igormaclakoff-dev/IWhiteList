@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.util.Map;
@@ -26,11 +27,14 @@ import java.util.Map;
  */
 public final class IWhiteListPlugin extends JavaPlugin {
 
+    private static final long PRUNE_INTERVAL_TICKS = 20L * 30L;
+
     private PluginConfig pluginConfig;
     private Messages messages;
     private WhitelistManager whitelistManager;
     private MenuService menuService;
     private ChatInputManager chatInputManager;
+    private BukkitTask pruneTask;
 
     @Override
     public void onEnable() {
@@ -46,6 +50,8 @@ public final class IWhiteListPlugin extends JavaPlugin {
         registerCommands();
         registerListeners();
         this.whitelistManager.start();
+        this.pruneTask = Bukkit.getScheduler().runTaskTimer(this, chatInputManager::prune,
+                PRUNE_INTERVAL_TICKS, PRUNE_INTERVAL_TICKS);
         disableVanillaWhitelist();
         setupPlaceholders();
 
@@ -55,6 +61,9 @@ public final class IWhiteListPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (pruneTask != null) {
+            pruneTask.cancel();
+        }
         if (whitelistManager != null) {
             whitelistManager.shutdown();
             whitelistManager.saveSync();

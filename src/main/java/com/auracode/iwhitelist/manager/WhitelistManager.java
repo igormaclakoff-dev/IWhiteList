@@ -37,9 +37,11 @@ public final class WhitelistManager {
     private final File logFile;
     private final Map<UUID, WhitelistEntry> entries = new ConcurrentHashMap<>();
     private final Map<UUID, BukkitTask> expiryTasks = new ConcurrentHashMap<>();
+    private final Object saveLock = new Object();
 
     private boolean enabled;
     private BukkitTask task;
+    private volatile boolean saveScheduled;
 
     public WhitelistManager(IWhiteListPlugin plugin) {
         this.plugin = plugin;
@@ -128,7 +130,9 @@ public final class WhitelistManager {
             scheduleExpiry(entry);
             return;
         }
-        entries.remove(uuid);
+        if (entries.remove(uuid) == null) {
+            return;
+        }
         cancelExpiry(uuid);
         logAction("CONSOLE", "expire", entry.name());
         notifyStaff("notify.expired", Placeholders.of().set("player", entry.name()).build());
@@ -198,13 +202,12 @@ public final class WhitelistManager {
     }
 
     public boolean add(UUID uuid, String name, UUID addedBy, String addedByName, long durationMillis) {
-        if (entries.containsKey(uuid)) {
-            return false;
-        }
         long now = System.currentTimeMillis();
         long expiresAt = durationMillis <= 0L ? WhitelistEntry.PERMANENT : now + durationMillis;
         WhitelistEntry entry = new WhitelistEntry(uuid, name, now, addedBy, addedByName, expiresAt);
-        entries.put(uuid, entry);
+        if (entries.putIfAbsent(uuid, entry) != null) {
+            return false;
+        }
         if (!entry.isPermanent()) {
             scheduleExpiry(entry);
         }
@@ -232,20 +235,29 @@ public final class WhitelistManager {
     }
 
     public void save() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, this::saveSync);
+        if (saveScheduled) {
+            return;
+        }
+        saveScheduled = true;
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            saveScheduled = false;
+            saveSync();
+        });
     }
 
     public void saveSync() {
-        YamlConfiguration yaml = new YamlConfiguration();
-        yaml.set("enabled", enabled);
-        ConfigurationSection root = yaml.createSection(ROOT);
-        for (WhitelistEntry entry : entries.values()) {
-            entry.write(root.createSection(entry.uuid().toString()));
-        }
-        try {
-            yaml.save(file);
-        } catch (IOException exception) {
-            plugin.getLogger().severe("Failed to save whitelist: " + exception.getMessage());
+        synchronized (saveLock) {
+            YamlConfiguration yaml = new YamlConfiguration();
+            yaml.set("enabled", enabled);
+            ConfigurationSection root = yaml.createSection(ROOT);
+            for (WhitelistEntry entry : entries.values()) {
+                entry.write(root.createSection(entry.uuid().toString()));
+            }
+            try {
+                yaml.save(file);
+            } catch (IOException exception) {
+                plugin.getLogger().severe("Failed to save whitelist: " + exception.getMessage());
+            }
         }
     }
 

@@ -27,6 +27,14 @@ public final class ChatInputManager {
         pending.remove(uuid);
     }
 
+    /**
+     * Drops expired requests so the map cannot grow when players never finish typing.
+     */
+    public void prune() {
+        long now = System.currentTimeMillis();
+        pending.entrySet().removeIf(entry -> now - entry.getValue().createdAt() > TIMEOUT_MILLIS);
+    }
+
     public boolean isWaiting(UUID uuid) {
         Pending value = pending.get(uuid);
         return value != null && !isExpired(value);

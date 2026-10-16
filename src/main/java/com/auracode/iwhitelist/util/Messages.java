@@ -33,7 +33,7 @@ public final class Messages {
 
     public void reload() {
         this.config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "messages.yml"));
-        Text.setPrefix(raw("prefix"));
+        Text.setPrefix(config.isString("prefix") ? config.getString("prefix", "") : "");
     }
 
     public String raw(String key) {
